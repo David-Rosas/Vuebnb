@@ -17,9 +17,8 @@
   <h1>vuebnb</h1>
 </div>
 <div id="app">
-<my-component></my-component>
   <div class="header">
-    <div class="header-img" v-bind:style="headerImageStyle" v-on:click="modalOpen = true">
+    <div class="header-img" :style="headerImageStyle" @click="openModal">
       <button class="view-photos">View Photos</button>
     </div>
   </div>
@@ -58,12 +57,9 @@
       </div>
     </div>
   </div>
-  <div id="modal" v-bind:class="{ show : modalOpen }">
-    <button v-on:click="modalOpen = false" class="modal-close">&times;</button>
-    <div class="modal-content">
-      <img v-bind:src="images[0]"/>
-    </div>
-  </div>
+ <modal-window ref="imagemodal">
+    <image-carousel :images="images"></image-carousel>
+  </modal-window>
 </div>
 <script>
 window.vuebnb_listing_model = '{!! addslashes(json_encode($model)) !!}';

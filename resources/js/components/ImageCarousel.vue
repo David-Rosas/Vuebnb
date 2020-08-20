@@ -40,7 +40,7 @@ import CarouselControl from '../components/CarouselControl.vue';
       }
     },
     components: {
-      'CarouselControl': {
+      'carousel-control': {
         template: `<i :class="classes" @click="clicked"></i>`,
         props: [ 'dir' ],
         computed: {

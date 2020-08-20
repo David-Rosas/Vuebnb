@@ -25,8 +25,8 @@ import { populateAmenitiesAndPrices} from './helpers';
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('my-component', require('./components/myComponent.vue').default);
-Vue.component('Image-Carousel', require('./components/ImageCarousel.vue').default);
+Vue.component('image-carousel', require('./components/ImageCarousel.vue').default);
+Vue.component('modal-window', require('./components/ModalWindow.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -41,7 +41,12 @@ const app = new Vue({
         headerImageStyle: {
             'background-image': `url(${model.images[0]})`
           }
-        })
+        }),
+        methods:{
+            openModal(){
+                this.$refs.imagemodal.modalOpen =  true;
+            }
+        }
 
 
 });
