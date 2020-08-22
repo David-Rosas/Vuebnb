@@ -28,6 +28,7 @@ import { populateAmenitiesAndPrices} from './helpers';
 Vue.component('image-carousel', require('./components/ImageCarousel.vue').default);
 Vue.component('modal-window', require('./components/ModalWindow.vue').default);
 Vue.component('header-image', require('./components/HeaderImage.vue').default);
+Vue.component('feature-list', require('./components/FeatureList.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

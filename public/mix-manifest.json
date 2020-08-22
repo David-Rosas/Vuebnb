@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/vue-style.css": "/css/vue-style.css"
+    "/css/vue-style.css": "/css/vue-style.css",
+    "/css/style.css": "/css/style.css"
 }
