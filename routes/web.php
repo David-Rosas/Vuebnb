@@ -3,7 +3,7 @@
 use App\Listing;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-Use App\Listings;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
