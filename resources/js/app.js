@@ -30,10 +30,14 @@ Vue.use(Vuetify)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import ListingPage from './components/ListingPage.vue';
 
+//import "core-js/fn/object/assing";
+import Vue from 'vue';
+import router from './router';
+import App from './components/App.vue';
 const app = new Vue({
     vuetify: new Vuetify(),
     el: '#app',
-    render: h => h(ListingPage)
+    render: h => h(App),
+    router
 });

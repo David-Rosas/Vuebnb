@@ -10,10 +10,6 @@
   <link rel="stylesheet" href="{{ asset('css/vue-style.css') }}" type="text/css">
 </head>
 <body>
-<div id="toolbar">
-  <img class="icon" src="{{asset('images/logo.png')}}">
-  <h1>vuebnb</h1>
-</div>
 <div id="app"></div>
 <script>
 window.vuebnb_listing_model = '{!! addslashes(json_encode($model)) !!}';
