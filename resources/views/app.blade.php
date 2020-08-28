@@ -12,7 +12,7 @@
 <body>
 <div id="app"></div>
 <script>
-window.vuebnb_listing_model = '{!! addslashes(json_encode($model)) !!}';
+window.vuebnb_server_data = '{!! addslashes(json_encode($data)) !!}';
 </script>
 <script src="{{asset('js/app.js')}}"></script>
 

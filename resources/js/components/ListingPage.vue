@@ -42,11 +42,11 @@ import HeaderImage from "./HeaderImage.vue";
 import FeatureList from "./FeatureList.vue";
 import ExpandableText from "./ExpandableText.vue";
 
-let model = JSON.parse(window.vuebnb_listing_model);
-model = populateAmenitiesAndPrices(model);
+let serverData = JSON.parse(window.vuebnb_server_data);
+ serverData = populateAmenitiesAndPrices(serverData.listing);
 export default {
     data() {
-        return Object.assign(model, {});
+        return Object.assign(serverData, {});
     },
     components: {
         ImageCarousel,

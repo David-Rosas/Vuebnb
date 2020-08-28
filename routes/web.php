@@ -1,6 +1,5 @@
 <?php
 
-use App\Listing;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +13,13 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'ListingController@get_home_web');
 
 Route::get('/listing/{listing}', 'ListingController@getListingsWeb');
 
 Route::get('api/listings/{listing}', 'ListingController@getListingsApi');
+
+Route::get('/', 'ListingController@get_home_api');
 
 Auth::routes();
 
