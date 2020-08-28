@@ -43,3 +43,6 @@ const app = new Vue({
 });
 
 
+Vue.config.errorHandler = function (error, vm, info) {
+    console.log(error, vm, info);
+  }

@@ -16,29 +16,24 @@
 import {groupByCountry} from '../helpers'
 import ListingSummary from './ListingSummary';
 import axios from 'axios';
-//let serverData = JSON.parse(window.vuebnb_server_data);
-//let listing_groups = groupByCountry(serverData.listings);
+import routeMixin from '../route-mixin';
 
 export default{
+    mixins: [routeMixin],
     data(){
-        return{listing_groups}
+        return{
+            listing_groups:[]
+            }
+    },
+    methods:{
+       assignData({listings}){
+            this.listing_groups = groupByCountry(listings);
+        }
     },
     components: {
         ListingSummary
     },
-    beforeRouteEnter(to, from, next){
-        let serverData = JSON.parse(window.vuebnb_server_data);
-        if(to.path === serverData.path){
-            let listing_groups = groupByCountry(serverData.listings);
-            next(component => component.listing_groups = listing_groups);
-        }else{
-            axios.get('/api/').then(({data}) => {
-            let listing_groups = groupByCountry(data.listings);
-            next(component => component.listing_groups = listing_groups);
-            });
 
-        }
-    }
 }
 </script>
 <style>

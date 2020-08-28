@@ -2031,6 +2031,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ListingSummary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListingSummary */ "./resources/js/components/ListingSummary.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _route_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../route-mixin */ "./resources/js/route-mixin.js");
 //
 //
 //
@@ -2046,36 +2047,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
- //let serverData = JSON.parse(window.vuebnb_server_data);
-//let listing_groups = groupByCountry(serverData.listings);
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_route_mixin__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
-      listing_groups: listing_groups
+      listing_groups: []
     };
+  },
+  methods: {
+    assignData: function assignData(_ref) {
+      var listings = _ref.listings;
+      this.listing_groups = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["groupByCountry"])(listings);
+    }
   },
   components: {
     ListingSummary: _ListingSummary__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    var serverData = JSON.parse(window.vuebnb_server_data);
-
-    if (to.path === serverData.path) {
-      var _listing_groups = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["groupByCountry"])(serverData.listings);
-
-      next(function (component) {
-        return component.listing_groups = _listing_groups;
-      });
-    } else {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/').then(function (_ref) {
-        var data = _ref.data;
-        var listing_groups = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["groupByCountry"])(data.listings);
-        next(function (component) {
-          return component.listing_groups = listing_groups;
-        });
-      });
-    }
   }
 });
 
@@ -2167,6 +2155,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HeaderImage_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HeaderImage.vue */ "./resources/js/components/HeaderImage.vue");
 /* harmony import */ var _FeatureList_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FeatureList.vue */ "./resources/js/components/FeatureList.vue");
 /* harmony import */ var _ExpandableText_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ExpandableText.vue */ "./resources/js/components/ExpandableText.vue");
+/* harmony import */ var _route_mixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../route-mixin */ "./resources/js/route-mixin.js");
+//
 //
 //
 //
@@ -2209,11 +2199,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var serverData = JSON.parse(window.vuebnb_server_data);
-serverData = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["populateAmenitiesAndPrices"])(serverData.listing);
+ //let serverData = JSON.parse(window.vuebnb_server_data);
+//serverData = populateAmenitiesAndPrices(serverData.listing);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_route_mixin__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
-    return Object.assign(serverData, {});
+    return {
+      title: null,
+      about: null,
+      address: null,
+      amenities: [],
+      prices: [],
+      images: []
+    };
   },
   components: {
     ImageCarousel: _ImageCarousel_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2223,6 +2222,10 @@ serverData = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["populateAmenitiesAndP
     ExpandableText: _ExpandableText_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   methods: {
+    assignData: function assignData(_ref) {
+      var listing = _ref.listing;
+      Object.assign(this.$data, Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["populateAmenitiesAndPrices"])(listing));
+    },
     openModal: function openModal() {
       this.$refs.imagemodal.modalOpen = true;
     }
@@ -2240,6 +2243,8 @@ serverData = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["populateAmenitiesAndP
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -38293,10 +38298,12 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("header-image", {
-        attrs: { "image-url": _vm.images[0] },
-        on: { "header-clicked": _vm.openModal }
-      }),
+      _vm.images[0]
+        ? _c("header-image", {
+            attrs: { "image-url": _vm.images[0] },
+            on: { "header-clicked": _vm.openModal }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "heading" }, [
@@ -38393,21 +38400,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "listing-summary" }, [
-    _c("div", { staticClass: "wrapper" }, [
-      _c("div", { staticClass: "thumbnail", style: _vm.backgroundImageStyle }),
-      _vm._v(" "),
-      _c("div", { staticClass: "info title" }, [
-        _c("span", [_vm._v(_vm._s(_vm.listing.price_per_night))]),
-        _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm.listing.title))])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "info address" }, [
-        _vm._v(_vm._s(_vm.listing.address))
-      ])
-    ])
-  ])
+  return _c(
+    "div",
+    { staticClass: "listing-summary" },
+    [
+      _c(
+        "router-link",
+        {
+          attrs: {
+            to: { name: "listing", params: { listing: _vm.listing.id } }
+          }
+        },
+        [
+          _c("div", { staticClass: "wrapper" }, [
+            _c("div", {
+              staticClass: "thumbnail",
+              style: _vm.backgroundImageStyle
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "info title" }, [
+              _c("span", [_vm._v(_vm._s(_vm.listing.price_per_night))]),
+              _vm._v(" "),
+              _c("span", [_vm._v(_vm._s(_vm.listing.title))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "info address" }, [
+              _vm._v(_vm._s(_vm.listing.address))
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -97483,6 +97508,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   router: _router__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.config.errorHandler = function (error, vm, info) {
+  console.log(error, vm, info);
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -98489,6 +98518,46 @@ var groupByCountry = function groupByCountry(listings) {
 
 /***/ }),
 
+/***/ "./resources/js/route-mixin.js":
+/*!*************************************!*\
+  !*** ./resources/js/route-mixin.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function getData(to) {
+  return new Promise(function (resolve) {
+    var serverData = JSON.parse(window.vuebnb_server_data);
+
+    if (!serverData.path || to.path !== serverData.path) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api".concat(to.path)).then(function (_ref) {
+        var data = _ref.data;
+        resolve(data);
+      });
+    } else {
+      resolve(serverData);
+    }
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+    getData(to).then(function (data) {
+      next(function (component) {
+        return component.assignData(data);
+      });
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/router.js":
 /*!********************************!*\
   !*** ./resources/js/router.js ***!
@@ -98502,7 +98571,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_ListingPage_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ListingPage.vue */ "./resources/js/components/ListingPage.vue");
-/* harmony import */ var _components_HomePage_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HomePage.vue */ "./resources/js/components/HomePage.vue");
+/* harmony import */ var _components_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HomePage */ "./resources/js/components/HomePage.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -98512,13 +98581,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   mode: 'history',
   routes: [{
     path: '/',
-    component: _components_HomePage_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    component: _components_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"],
     name: 'home'
   }, {
     path: '/listing/:listing',
     component: _components_ListingPage_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     name: 'listing'
-  }]
+  }],
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
 }));
 
 /***/ }),

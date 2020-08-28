@@ -36,11 +36,11 @@ class ListingController extends Controller
     }
     private function get_listing_summaries(){
         $collection = Listing::all([
-            'id', 'addres', 'title', 'price_per_night'
+            'id', 'address', 'title', 'price_per_night'
         ]);
         $collection->transform(function($listing){
             $listing->thumb = asset(
-                'images/' . $listing->id . '/Images_1_thumb.jpg'
+                'images/' . $listing->id . '/Image_1_thumb.jpg'
             );
             return $listing;
         });

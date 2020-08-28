@@ -1,5 +1,6 @@
 <template>
 <div class="listing-summary">
+    <router-link  :to="{name: 'listing', params:{listing: listing.id}}">
     <div class="wrapper">
         <div class="thumbnail" :style="backgroundImageStyle"></div>
         <div class="info title">
@@ -8,6 +9,7 @@
         </div>
         <div class="info address">{{listing.address}}</div>
    </div>
+   </router-link>
 </div>
 </template>
 <script>

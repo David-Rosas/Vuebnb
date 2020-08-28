@@ -17,9 +17,9 @@ Route::get('/', 'ListingController@get_home_web');
 
 Route::get('/listing/{listing}', 'ListingController@getListingsWeb');
 
-Route::get('api/listings/{listing}', 'ListingController@getListingsApi');
+Route::get('/api/listing/{listing}', 'ListingController@getListingsApi');
 
-Route::get('/', 'ListingController@get_home_api');
+Route::get('/api', 'ListingController@get_home_api');
 
 Auth::routes();
 
