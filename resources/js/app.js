@@ -35,11 +35,14 @@ Vue.use(Vuetify)
 import Vue from 'vue';
 import router from './router';
 import App from './components/App.vue';
+import store from './store';
+
 const app = new Vue({
     vuetify: new Vuetify(),
     el: '#app',
     render: h => h(App),
-    router
+    router,
+    store
 });
 
 
