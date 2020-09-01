@@ -2271,12 +2271,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     listing: function listing() {
-      var _this = this;
-
-      var listing = this.$store.state.listings.find(function (listing) {
-        return listing.id == _this.$route.params.listing;
-      });
-      return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["populateAmenitiesAndPrices"])(listing);
+      return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["populateAmenitiesAndPrices"])(this.$store.getters.getListing(this.$route.params.listing));
     }
   },
   components: {
@@ -100525,6 +100520,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     saved: [],
     listing_summaries: [],
     listings: []
+  },
+  getters: {
+    savedSummaries: function savedSummaries(state) {
+      return state.listing_summaries.filter(function (item) {
+        return state.saved.indexOf(item.id) > -1;
+      });
+    },
+    getListing: function getListing(state) {
+      return function (id) {
+        return state.listings.find(function (listing) {
+          return id == listing.id;
+        });
+      };
+    }
   },
   mutations: {
     toggleSaved: function toggleSaved(state, id) {

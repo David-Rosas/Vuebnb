@@ -8,6 +8,14 @@ export default new Vuex.Store({
         listing_summaries: [],
         listings: []
     },
+    getters: {
+        savedSummaries(state) {
+            return state.listing_summaries.filter(item => state.saved.indexOf(item.id) > -1);
+        },
+        getListing(state) {
+            return id => state.listings.find(listing => id == listing.id);
+        }
+    },
     mutations: {
         toggleSaved(state, id) {
             let index = state.saved.findIndex(saved => saved === id);
