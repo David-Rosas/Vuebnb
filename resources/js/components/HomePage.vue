@@ -1,48 +1,39 @@
 <template>
-    <div class="home-container">
-   <listing-summary-group
-   v-for="(group, country) in listing_groups"
-   :key="country"
-   :listings="group"
-   :country="country"
-   class="listing-summary-group"
-   ></listing-summary-group>
-</div>
+  <div class="home-container">
+    <listing-summary-group
+      v-for="(group, country) in listing_groups"
+      :key="country"
+      :listings="group"
+      :country="country"
+      class="listing-summary-group"
+    ></listing-summary-group>
+  </div>
 </template>
 <script>
+import { groupByCountry } from "../helpers";
+import ListingSummaryGroup from "./ListingSummaryGroup";
 
-import {groupByCountry} from '../helpers'
-import ListingSummaryGroup from './ListingSummaryGroup'
-import routeMixin from '../route-mixin';
+export default {
+  computed: {
+    listing_groups() {
+      return groupByCountry(this.$store.state.listing_summaries);
+    },
+  },
 
-export default{
-    mixins: [routeMixin],
-    data(){
-        return{
-            listing_groups:[]
-            }
-    },
-    methods:{
-       assignData({listings}){
-            this.listing_groups = groupByCountry(listings);
-        }
-    },
-    components: {
-        ListingSummaryGroup
-    },
-
-}
+  components: {
+    ListingSummaryGroup,
+  },
+};
 </script>
 <style>
+.home-container {
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+@media (min-width: 1131px) {
   .home-container {
-    margin: 0 auto;
-    padding: 0 25px;
+    width: 1080px;
   }
-
-  @media (min-width: 1131px) {
-    .home-container {
-      width: 1080px;
-    }
-  }
-
+}
 </style>

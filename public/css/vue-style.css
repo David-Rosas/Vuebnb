@@ -176,10 +176,10 @@ p {
 }
 
 .about {
-    margin: 2em 0;
+  margin: 2em 0;
 }
 .about h3 {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .listing-summary {
@@ -268,7 +268,6 @@ p {
     width: 1080px;
 }
 }
-
 
 #footer {
   margin-bottom: 3em;
